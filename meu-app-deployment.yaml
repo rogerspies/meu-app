@@ -4,7 +4,7 @@ metadata:
   name: meu-app
   namespace: default
 spec:
-  replicas: 2 # Vamos subir 2 cópias para ter alta disponibilidade!
+  replicas: 2
   selector:
     matchLabels:
       app: meu-app
@@ -15,10 +15,30 @@ spec:
     spec:
       containers:
       - name: meu-app
-        # USE EXATAMENTE O CAMINHO DA IMAGEM QUE VOCÊ FEZ PUSH
-        image: southamerica-east1-docker.pkg.dev/gsre-489913/meu-repo/meu-app:v1
+        # Imagem v2 com Python + Flask + Psycopg2
+        image: southamerica-east1-docker.pkg.dev/gsre-489913/meu-repo/meu-app:v2
         ports:
         - containerPort: 80
+        env:
+        # Endereço IP Privado da instância do Cloud SQL
+        - name: DB_HOST
+          value: "10.36.0.3"
+        
+        # Nome do banco de dados que criamos no Cloud SQL Studio
+        - name: DB_NAME
+          value: "billing_db"
+        
+        # Usuário criado via gcloud
+        - name: DB_USER
+          value: "app-user"
+        
+        # SENHA PROTEGIDA: O valor não está aqui, mas sim no Kubernetes Secret
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: db-pass-k8s
+              key: password
+
 ---
 apiVersion: v1
 kind: Service
@@ -30,6 +50,6 @@ spec:
   selector:
     app: meu-app
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
+  - protocol: TCP
+    port: 80
+    targetPort: 80
