@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
       - name: meu-app
-        # Imagem v2 com Python + Flask + Psycopg2
-        image: southamerica-east1-docker.pkg.dev/gsre-489913/meu-repo/meu-app:v2
+        # Imagem v3 com Python + Flask + Psycopg2
+        image: southamerica-east1-docker.pkg.dev/gsre-489913/meu-repo/meu-app:v3
         ports:
         - containerPort: 80
         env:
