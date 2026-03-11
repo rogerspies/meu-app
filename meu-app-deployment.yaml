@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meu-app
+  namespace: default
+spec:
+  replicas: 2 # Vamos subir 2 cópias para ter alta disponibilidade!
+  selector:
+    matchLabels:
+      app: meu-app
+  template:
+    metadata:
+      labels:
+        app: meu-app
+    spec:
+      containers:
+      - name: meu-app
+        # USE EXATAMENTE O CAMINHO DA IMAGEM QUE VOCÊ FEZ PUSH
+        image: southamerica-east1-docker.pkg.dev/gsre-489913/meu-repo/meu-app:v1
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: meu-app-service
+  namespace: default
+spec:
+  type: LoadBalancer
+  selector:
+    app: meu-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
