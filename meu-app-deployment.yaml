@@ -19,6 +19,16 @@ spec:
         image: southamerica-east1-docker.pkg.dev/gsre-489913/meu-repo/meu-app:v3
         ports:
         - containerPort: 80
+        
+        # DEFINIÇÃO DE RECURSOS (Essencial para o Autoscaling)
+        resources:
+          requests:
+            cpu: "100m"     # Reserva 0.1 núcleo (garante que o pod tenha fôlego)
+            memory: "128Mi"
+          limits:
+            cpu: "200m"     # Teto de 0.2 núcleo para forçar a escala mais rápido no teste
+            memory: "256Mi"
+
         env:
         # Endereço IP Privado da instância do Cloud SQL
         - name: DB_HOST
