@@ -37,7 +37,7 @@ spec:
         
         # Nome do banco de dados que criamos no Cloud SQL Studio
         - name: DB_NAME
-          value: "postgres"
+          value: "billing_db"
         
         # Usuário criado via gcloud
         - name: DB_USER
