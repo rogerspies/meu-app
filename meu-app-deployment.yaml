@@ -32,7 +32,7 @@ spec:
         env:
         # Endereço IP Privado da instância do Cloud SQL
         - name: DB_HOST
-          value: "10.36.0.3"
+          value: "34.39.128.208"
         
         # Nome do banco de dados que criamos no Cloud SQL Studio
         - name: DB_NAME
