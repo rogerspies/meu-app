@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: meu-app-firewall-strict
+  name: meu-app-deny-all
   namespace: default
 spec:
   podSelector:
@@ -9,16 +9,4 @@ spec:
       app: meu-app
   policyTypes:
   - Ingress
-  ingress:
-  # LIBERAÇÃO 1: Somente tráfego que vem de FORA do cluster (Internet)
-  - from:
-    - ipBlock:
-        cidr: 0.0.0.0/0
-        except:
-        - 10.0.0.0/8     # Bloqueia a rede interna do GCP
-        - 172.16.0.0/12   # Bloqueia a rede interna de Pods
-    ports:
-    - protocol: TCP
-      port: 80
-
-  # SE NÃO TIVER OUTRO 'FROM' AQUI, NINGUÉM DO CLUSTER ENTRA!
+  # Ao deixar 'ingress' vazio, você bloqueia TUDO por padrão
