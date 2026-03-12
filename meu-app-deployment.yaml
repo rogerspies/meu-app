@@ -32,11 +32,11 @@ spec:
         env:
         # Endereço IP Privado da instância do Cloud SQL
         - name: DB_HOST
-          value: "34.39.128.208"
+          value: "10.33.0.3"
         
         # Nome do banco de dados que criamos no Cloud SQL Studio
         - name: DB_NAME
-          value: "billing_db"
+          value: "postgres"
         
         # Usuário criado via gcloud
         - name: DB_USER
